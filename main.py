@@ -24,9 +24,9 @@ if __name__ == '__main__':
         altitude.append(rock.pos.z)
         velocity.append(rock.vel.z)
 
-    # simulate it falling for a second
+    # simulate it falling for two seconds
     dynamics.printstatus()
-    for i in range(10):
+    for i in range(20):
         dynamics.tick(0.1, sample=sample)
 
     # chart position vs time
