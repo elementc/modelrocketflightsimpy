@@ -18,12 +18,14 @@ class Dynamics:
         for i in range(len(self.objects)):
             print("\t[%d] %s" % (i, self.objects[i]))
 
-    def tick(self, dt):
-        self.time += dt
-        for obj in self.objects:
-            for i in range(self.tickiterations):
+    def tick(self, dt, sample=None):
+        for i in range(self.tickiterations):
+            self.time += (dt / self.tickiterations)
+            for obj in self.objects:
                 # accelerate...
                 obj.vel += self.env.gravity() * (dt / self.tickiterations)
                 # translate
                 obj.pos += obj.vel * (dt / self.tickiterations)
+            if callable(sample):
+                sample()
         self.printstatus()
