@@ -13,10 +13,10 @@ class Vector3:
         if isinstance(other, self.__class__):
             return Vector3(self.x + other.x, self.y + other.y, self.z + other.z)
         else:
-            raise NotImplementedException()
+            raise NotImplementedError()
 
     def __mul__(self, other):
         if isinstance(other, float):
             return Vector3(self.x * other, self.y * other, self.z * other)
         else:
-            raise NotImplementedException()
+            raise NotImplementedError()
