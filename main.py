@@ -25,7 +25,7 @@ if __name__ == '__main__':
         velocity.append(rocket.vel.z)
 
     # liftoff is at 2 seconds. simulate until vehicle returns to the ground.
-    while dynamics.time < 3 or rocket.pos.z != 0:
+    while not rocket.touched_down:
         dynamics.tick(0.02)
         sample()
 
@@ -42,3 +42,5 @@ if __name__ == '__main__':
     plt.ylabel('velocity, m/s')
     plt.title("Vehicle Velocity")
     plt.show()
+
+    # TODO: license.
