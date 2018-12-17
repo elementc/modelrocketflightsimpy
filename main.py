@@ -1,6 +1,6 @@
 from sim.dynamics import Dynamics
 from sim.earth import Earth
-from sim.obj import Obj
+from sim.objects.rocket import Rocket
 from sim.util import Vector3
 import matplotlib.pyplot as plt
 
@@ -10,8 +10,8 @@ if __name__ == '__main__':
     dynamics = Dynamics(environment=Earth())
 
     # create a rock
-    rock = Obj(Vector3(0, 0, 10), Vector3(0, 0, 0))
-    dynamics.objects.append(rock)
+    rocket = Rocket(Vector3(0, 0, 0), Vector3(0, 0, 0), "Falcon 0.9")
+    dynamics.objects.append(rocket)
 
     # create lists to store data for later plotting
     time = []
@@ -21,13 +21,12 @@ if __name__ == '__main__':
     # create a function which gathers data for later plotting.
     def sample():
         time.append(dynamics.time)
-        altitude.append(rock.pos.z)
-        velocity.append(rock.vel.z)
+        altitude.append(rocket.pos.z)
+        velocity.append(rocket.vel.z)
 
-    # simulate it falling for two seconds
-    dynamics.printstatus()
-    for i in range(20 * 50):
-        dynamics.tick(0.1 / 50)
+    # liftoff is at 2 seconds. simulate until vehicle returns to the ground.
+    while dynamics.time < 3 or rocket.pos.z != 0:
+        dynamics.tick(0.02)
         sample()
 
     # chart position vs time

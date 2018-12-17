@@ -1,12 +1,14 @@
 class Dynamics:
-    def __init__(self, environment, elasticcollisions=False):
+    def __init__(self, environment, elasticcollisions=False, logticks=False):
         self.env = environment
+        self.logticks = logticks
         self.objects = []
         self.elasticcollisions = elasticcollisions
         self.time = 0.0
-        print('Dynamics initialized.')
-        print('bounds: ', self.env.extents())
-        print('f(gravity): ', self.env.gravity())
+        if self.logticks:
+            print('Dynamics initialized.')
+            print('bounds: ', self.env.extents())
+            print('f(gravity): ', self.env.gravity())
 
     def reset(self):
         for obj in self.objects:
@@ -95,5 +97,7 @@ class Dynamics:
             obj.pos += obj.vel * dt
             # clamp to bounds
             self._clamp_to_bounds(obj)
-        # print out the state of the world
-        self.printstatus()
+
+        if self.logticks:
+            # print out the state of the world
+            self.printstatus()
