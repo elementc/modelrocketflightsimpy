@@ -18,7 +18,7 @@ if __name__ == '__main__':
     altitude = []
     velocity = []
 
-    # create a function which gaters data for later plotting.
+    # create a function which gathers data for later plotting.
     def sample():
         time.append(dynamics.time)
         altitude.append(rock.pos.z)
@@ -27,7 +27,8 @@ if __name__ == '__main__':
     # simulate it falling for two seconds
     dynamics.printstatus()
     for i in range(20 * 50):
-        dynamics.tick(0.1 / 50, sample=sample)
+        dynamics.tick(0.1 / 50)
+        sample()
 
     # chart position vs time
     plt.plot(time, altitude)

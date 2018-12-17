@@ -12,6 +12,9 @@ class Obj:
         self.pos = self.initPos.copy()
         self.vel = self.initVel.copy()
 
+    def tick(self, time, dt):
+        pass
+
     def __repr__(self):
         return str("%s: {position: %s, velocity: %s}" %
                    (self.name, self.pos, self.vel))
