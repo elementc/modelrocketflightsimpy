@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
     # liftoff is at 2 seconds. simulate until vehicle returns to the ground.
     while not rocket.touched_down:
-        dynamics.tick(0.02)
+        dynamics.tick(0.01)
         sample()
 
     # chart position vs time
@@ -42,5 +42,3 @@ if __name__ == '__main__':
     plt.ylabel('velocity, m/s')
     plt.title("Vehicle Velocity")
     plt.show()
-
-    # TODO: license.
