@@ -8,7 +8,8 @@ class Rocket(Obj):
     burn_start_time = -1
     is_thrusting = False
     touched_down = False
-
+    apogee_reached = False
+    second_burn_start = 7.15
 
     f15_tc = [(0.0,  0),
               (0.25, 12.5),
@@ -42,12 +43,19 @@ class Rocket(Obj):
         if self.burn_start_time == -1:
             self. is_thrusting = True
             self.burn_start_time = time
+        if time-dt < self.second_burn_start and time+dt >= self.second_burn_start:
+            self.is_thrusting = True
+            self.burn_start_time = time
+
         if self.is_thrusting:
             self._apply_engine_thrust(time, dt)
-        if self.vel.z <= 0 and self.last_zvel > 0:
+
+        if not self.apogee_reached and self.vel.z <= 0 and self.last_zvel > 0:
             print("apogee: t=%fs, altitude = %f meters" % (time, self.pos.z))
+            self.apogee_reached = True
         if self.vel.z == 0 and self.last_zvel < 0:
             print("touchdown: t=%fs, velocity = %f meters/sec" %
                   (time, self.last_zvel))
             self.touched_down = True
+
         self.last_zvel = self.vel.z
