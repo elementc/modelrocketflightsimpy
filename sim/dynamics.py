@@ -1,6 +1,5 @@
 class Dynamics:
-    def __init__(self, environment, tickiterations=50, elasticcollisions=False):
-        self.tickiterations = tickiterations
+    def __init__(self, environment, elasticcollisions=False):
         self.env = environment
         self.objects = []
         self.elasticcollisions = elasticcollisions
@@ -20,26 +19,25 @@ class Dynamics:
             print("\t[%d] %s" % (i, self.objects[i]))
 
     def tick(self, dt, sample=None):
-        for i in range(self.tickiterations):
-            self.time += (dt / self.tickiterations)
-            for obj in self.objects:
-                # accelerate...
-                obj.vel += self.env.gravity() * (dt / self.tickiterations)
-                # translate
-                obj.pos += obj.vel * (dt / self.tickiterations)
+        self.time += dt
+        for obj in self.objects:
+            # accelerate...
+            obj.vel += self.env.gravity() * dt
+            # translate
+            obj.pos += obj.vel * dt
 
-                # clamp to bounds
-                # TODO: repeat for additional extents
-                if obj.pos.z < self.env.extents()['minZ']:
-                    obj.pos.z = self.env.extents()['minZ']
-                    if obj.vel.z < 0:
-                        if self.elasticcollisions:
-                            # elastic collision preserves kinetic energy
-                            obj.vel.z = -obj.vel.z
-                        else:
-                            # inelastic collision just kinda stops
-                            obj.vel.z = 0
+            # clamp to bounds
+            # TODO: repeat for additional extents
+            if obj.pos.z < self.env.extents()['minZ']:
+                obj.pos.z = self.env.extents()['minZ']
+                if obj.vel.z < 0:
+                    if self.elasticcollisions:
+                        # elastic collision preserves kinetic energy
+                        obj.vel.z = -obj.vel.z
+                    else:
+                        # inelastic collision just kinda stops
+                        obj.vel.z = 0
 
-            if callable(sample):
-                sample()
+        if callable(sample):
+            sample()
         self.printstatus()

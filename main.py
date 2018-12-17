@@ -26,8 +26,8 @@ if __name__ == '__main__':
 
     # simulate it falling for two seconds
     dynamics.printstatus()
-    for i in range(20):
-        dynamics.tick(0.1, sample=sample)
+    for i in range(20 * 50):
+        dynamics.tick(0.1 / 50, sample=sample)
 
     # chart position vs time
     plt.plot(time, altitude)
