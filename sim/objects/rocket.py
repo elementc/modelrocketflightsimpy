@@ -3,13 +3,12 @@ from .obj import Obj
 
 class Rocket(Obj):
     mass = 0.987  # kilogram
-    engine_thrust = 14.5  # newtons
     last_zvel = 0
     burn_start_time = -1
     is_thrusting = False
     touched_down = False
     apogee_reached = False
-    second_burn_start = 7.15
+    second_burn_start = 7.137
 
     f15_tc = [(0.0,  0),
               (0.25, 12.5),
@@ -25,6 +24,7 @@ class Rocket(Obj):
               (3.25, 13),
               (3.5,  0)]
 
+    # todo:  linearly interpolate here instead.
     def _get_thrust_from_tc(self, time_in_curve, tc):
         i = 0
         while i+1 < len(tc) and tc[i+1][0] < time_in_curve:
@@ -39,6 +39,7 @@ class Rocket(Obj):
         accel = thrust / self.mass
         self.vel.z += accel * dt
 
+    # todo: linearly interpolate out engine weights
     def tick(self, time, dt):
         if self.burn_start_time == -1:
             self. is_thrusting = True

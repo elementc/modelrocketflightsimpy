@@ -90,6 +90,7 @@ class Dynamics:
             obj.tick(self.time, dt)
 
         # physically simulate all objects
+        # todo: apply atmospheric drag here.
         for obj in self.objects:
             # accelerate...
             obj.vel += self.env.gravity() * dt
